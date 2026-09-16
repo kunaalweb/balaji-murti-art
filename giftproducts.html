@@ -54,7 +54,17 @@
         header { position: fixed; top: 0; left: 0; right: 0; z-index: 1200; }
         .navbar { background: rgba(250, 246, 236, 0.9) !important; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); box-shadow: none !important; padding: 18px 0; transition: .35s ease; }
         .navbar.scrolled { padding: 10px 0; box-shadow: 0 10px 30px rgba(18, 33, 24, .08) !important; }
-        .brand-mark { display: flex; align-items: center; gap: 12px; }
+                .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+.brand-mark { display: flex; align-items: center; gap: 12px; }
         .brand-mark .glyph { width: 38px; height: 38px; border-radius: 3px; background: linear-gradient(145deg, var(--emerald-light), var(--emerald-deep)); display: flex; align-items: center; justify-content: center; transform: rotate(45deg); flex-shrink: 0; }
         .brand-mark .glyph span { transform: rotate(-45deg); color: var(--gold-light); font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 17px; }
         .navbar-brand.brand-text { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--ink) !important; line-height: 1.1; }
@@ -113,7 +123,7 @@
 
         /* GRID */
         .bracelet-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
-        .bracelet-card { position: relative; background: var(--paper); border-radius: 3px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; transition: .3s; }
+        .bracelet-card { position: relative; background: var(--paper); border-radius: 12px; overflow: hidden; border: 1px solid var(--line); cursor: pointer; transition: .3s; }
         .bracelet-card img { width: 100%; height: 160px; object-fit: cover; transition: transform .5s ease; }
         .bracelet-card:hover img { transform: scale(1.1); }
         .bracelet-card:hover { border-color: var(--gold); box-shadow: var(--shadow-lift); transform: translateY(-4px); }
@@ -152,7 +162,8 @@
         }
         @media (max-width: 480px) { .bracelet-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
-    <link rel="icon" type="image/jpeg" href="imgs/logo.jpg">
+    <link rel="icon" type="image/png" href="imgs/favicon.png">
+    <link rel="apple-touch-icon" href="imgs/favicon.png">
 </head>
 
 <body>
@@ -161,7 +172,7 @@
         <nav class="navbar navbar-expand-lg" id="mainNav">
             <div class="container">
                 <a class="navbar-brand brand-text d-flex align-items-center gap-2" href="index.html">
-                    <span class="brand-mark"><span class="glyph"><span>B</span></span></span>
+                    <img src="imgs/logo.png" alt="Balaji Murti Art Logo" class="brand-logo" style="width:42px;height:42px;object-fit:contain;border-radius:50%;flex-shrink:0;">
                     Balaji Murti Art
                     <small style="display:block;margin-left:2px;">&amp; Gems</small>
                 </a>
@@ -175,19 +186,19 @@
                         <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                     </ul>
-                    <a class="nav-cta" href="https://wa.me/918209307105" target="_blank"><i class="fa-brands fa-whatsapp"></i> Enquire</a>
+                    <a class="nav-cta" href="https://wa.me/917877959827" target="_blank"><i class="fa-brands fa-whatsapp"></i> Enquire</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <div class="social-bar">
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://indiamart.com" target="_blank" aria-label="IndiaMART"><i class="fas fa-store"></i></a>
+        <a href="https://www.instagram.com/bmagems?stkn=M2diNmthY2xuZHdt" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.indiamart.com/balaji-murtiart/" target="_blank" aria-label="IndiaMART"><i class="fas fa-store"></i></a>
+        <a href="https://share.google/zMGrBWdB4O279n34Q" target="_blank" aria-label="Google Maps"><i class="fa-solid fa-location-dot"></i></a>
     </div>
 
-    <a href="https://wa.me/918209307105" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/917877959827" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -198,7 +209,7 @@
             <img id="lightboxImg" src="" alt="">
             <div class="lb-info">
                 <h4 id="lightboxTitle"></h4>
-                <a class="lightbox-inquire" href="https://wa.me/918209307105" target="_blank">Enquire on WhatsApp</a>
+                <a class="lightbox-inquire" href="https://wa.me/917877959827" target="_blank">Enquire on WhatsApp</a>
             </div>
         </div>
     </div>
@@ -389,7 +400,7 @@
         <div class="cta-banner">
             <h2>Don't see the exact design you want?</h2>
             <p>We add new gemstone bracelet designs regularly — message us and we'll show you what's currently in stock.</p>
-            <a href="https://wa.me/918209307105" target="_blank" class="btn-primary-gem"><i class="fa-brands fa-whatsapp"></i> Ask on WhatsApp</a>
+            <a href="https://wa.me/917877959827" target="_blank" class="btn-primary-gem"><i class="fa-brands fa-whatsapp"></i> Ask on WhatsApp</a>
         </div>
     </section>
 

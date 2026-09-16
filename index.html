@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google-site-verification" content="hvJRC48ON0-rulXhGBeOTDx00l92T0EnSBIXSBgXFrw" />
     <title>Balaji Murti Art & Gems | Handcrafted Crystal Devotion</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -148,7 +149,17 @@
             box-shadow: 0 10px 30px rgba(18, 33, 24, .08) !important;
         }
 
-        .brand-mark {
+                .brand-logo {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+.brand-mark {
             display: flex;
             align-items: center;
             gap: 12px;
@@ -537,19 +548,132 @@
             border-radius: 4px;
             overflow: hidden;
             clip-path: polygon(6% 0, 100% 0, 100% 94%, 94% 100%, 0 100%, 0 6%);
+            user-select: none;
         }
 
-        .hero-frame img {
+        .hero-slider {
+            position: relative;
             width: 100%;
             height: 520px;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(1.04);
+            transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+            will-change: opacity, transform;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            z-index: 1;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            display: block;
         }
 
         .hero-frame::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(200deg, rgba(31, 92, 74, .15), rgba(18, 33, 24, .35) 90%);
+            background: linear-gradient(200deg, rgba(31, 92, 74, .12), rgba(18, 33, 24, .4) 92%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Glassmorphic Slide Caption */
+        .hero-slide-caption {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 3;
+            background: rgba(18, 36, 28, 0.72);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 10px 16px;
+            border-radius: 4px;
+            border-left: 2px solid var(--gold);
+            color: #fff;
+            max-width: 80%;
+            pointer-events: none;
+            animation: slideCapIn 0.6s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+        }
+
+        @keyframes slideCapIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-slide-caption .slide-tag {
+            display: inline-block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold-light);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .hero-slide-caption h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        /* Slider Navigation Dots */
+        .hero-slider-dots {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(18, 36, 28, 0.6);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 6px 10px;
+            border-radius: 20px;
+            max-width: calc(100% - 48px);
+        }
+
+        .hero-slider-dots .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.45);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .hero-slider-dots .dot.active {
+            width: 18px;
+            border-radius: 9px;
+            background: var(--gold);
+        }
+
+        /* Mobile Performance: Virtualize rendering of heavy offscreen sections */
+        #collection, #bracelets {
+            content-visibility: auto;
+            contain-intrinsic-size: 1px 1200px;
         }
 
         .hero-corner {
@@ -691,7 +815,7 @@
 
         .product-card {
             background: var(--paper);
-            border-radius: 3px;
+            border-radius: 12px;
             overflow: hidden;
             text-align: left;
             text-decoration: none;
@@ -804,7 +928,7 @@
         .bracelet-card {
             position: relative;
             background: var(--paper);
-            border-radius: 3px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--line);
             display: block;
@@ -834,9 +958,7 @@
             bottom: 8px;
             left: 8px;
             right: 8px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.94);
             border-radius: 3px;
             padding: 6px 8px;
             font-size: 11.5px;
@@ -951,6 +1073,22 @@
             transform: none;
         }
 
+        /* Prevent products/bracelets from staying invisible on mobile */
+        @media (max-width: 768px) {
+            .fade {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
         /* ================= RESPONSIVE ================= */
 
         @media (max-width: 1100px) {
@@ -975,8 +1113,20 @@
             .hero-feats {
                 justify-content: center;
             }
-            .hero-frame img {
+            .hero-slider {
                 height: 380px;
+            }
+            .hero-slide-caption {
+                top: 16px;
+                left: 16px;
+                padding: 8px 12px;
+            }
+            .hero-slide-caption h4 {
+                font-size: 16px;
+            }
+            .hero-slider-dots {
+                bottom: 16px;
+                right: 16px;
             }
             .about-wrap {
                 grid-template-columns: 1fr;
@@ -1026,7 +1176,8 @@
             }
         }
     </style>
-    <link rel="icon" type="image/jpeg" href="imgs/logo.jpg">
+    <link rel="icon" type="image/png" href="imgs/favicon.png">
+    <link rel="apple-touch-icon" href="imgs/favicon.png">
 </head>
 
 <body>
@@ -1036,8 +1187,7 @@
             <div class="container">
 
                 <a class="navbar-brand brand-text d-flex align-items-center gap-2" href="index.html">
-                    <span class="brand-mark"><span class="glyph"><span>B</span></span>
-                    </span>
+                    <img src="imgs/logo.png" alt="Balaji Murti Art Logo" class="brand-logo" style="width:42px;height:42px;object-fit:contain;border-radius:50%;flex-shrink:0;">
                     Balaji Murti Art
                     <small style="display:block;margin-left:2px;">&amp; Gems</small>
                 </a>
@@ -1059,7 +1209,7 @@
                         <button class="nav-search-btn" id="openSearch" aria-label="Search products">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                        <a class="nav-cta" href="https://wa.me/918209307105" target="_blank">
+                        <a class="nav-cta" href="https://wa.me/917877959827" target="_blank">
                             <i class="fa-brands fa-whatsapp"></i> Enquire
                         </a>
                     </div>
@@ -1083,12 +1233,12 @@
     </div>
 
     <div class="social-bar">
-        <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://indiamart.com" target="_blank" aria-label="IndiaMART"><i class="fas fa-store"></i></a>
+        <a href="https://www.instagram.com/bmagems?stkn=M2diNmthY2xuZHdt" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.indiamart.com/balaji-murtiart/" target="_blank" aria-label="IndiaMART"><i class="fas fa-store"></i></a>
+        <a href="https://share.google/zMGrBWdB4O279n34Q" target="_blank" aria-label="Google Maps"><i class="fa-solid fa-location-dot"></i></a>
     </div>
 
-    <a href="https://wa.me/918209307105" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+    <a href="https://wa.me/917877959827" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -1102,19 +1252,19 @@
         </svg>
 
         <div class="hero-copy">
-            <span class="eyebrow">Handcrafted in Jaipur</span>
-            <h1>Where devotion is <em>carved in crystal.</em></h1>
-            <p class="lead">Balaji Murti Art &amp; Gems hand-finishes natural crystal murtis and gemstone bracelets — every facet cut with the patience of a craft passed down, not mass-produced.</p>
+            <span class="eyebrow">Sacred Jaipur Artisanship • Master Carvers</span>
+            <h1>Where Sacred Devotion Meets <em>Master Crystal Artistry.</em></h1>
+            <p class="lead">Hand-sculpted in the historic stonecraft lanes of Jaipur. We carve 100% natural Sphatik, genuine Jade, and precious gemstones into consecrated murtis, sacred yantras, and energizing adornments.</p>
 
             <div class="hero-ctas">
                 <a href="products.html" class="btn-primary-gem">Explore the Collection <i class="fa-solid fa-arrow-right"></i></a>
-                <a href="https://wa.me/918209307105" target="_blank" class="btn-ghost-gem"><i class="fa-brands fa-whatsapp"></i> Chat With Us</a>
+                <a href="https://wa.me/917877959827" target="_blank" class="btn-ghost-gem"><i class="fa-brands fa-whatsapp"></i> Chat With Us</a>
             </div>
 
             <div class="hero-feats">
-                <div class="feat"><i class="fa-solid fa-gem"></i><span>100% Natural Crystal</span></div>
-                <div class="feat"><i class="fa-solid fa-hand-sparkles"></i><span>Hand-Finished Detail</span></div>
-                <div class="feat"><i class="fa-solid fa-truck-fast"></i><span>Shipped Pan-India</span></div>
+                <div class="feat"><i class="fa-solid fa-gem"></i><span>100% Natural Earth Stones</span></div>
+                <div class="feat"><i class="fa-solid fa-hand-sparkles"></i><span>Master Hand-Carved</span></div>
+                <div class="feat"><i class="fa-solid fa-truck-fast"></i><span>Insured Pan-India Transit</span></div>
             </div>
         </div>
 
@@ -1122,13 +1272,98 @@
             <div class="hero-corner"></div>
             <div class="hero-corner br"></div>
             <div class="hero-frame">
-                <img src="imgs/DSC_6594.JPG" alt="Handcrafted crystal shivling">
+                <div class="hero-slider" id="heroSlider">
+                    <div class="hero-slide active">
+                        <img src="imgs/opt/dsc_6594.jpg" alt="Handcrafted Crystal Shivling" width="600" height="520" fetchpriority="high" loading="eager">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Pure Sphatik</span>
+                            <h4>Handcrafted Crystal Shivling</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/green_jade_ganesh.jpg" alt="Hand-Carved Green Jade Ganesh" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Natural Jade</span>
+                            <h4>Carved Green Jade Ganesh</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/sy1.jpg" alt="Sacred Crystal Shree Yantra" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Sacred Geometry</span>
+                            <h4>Crystal Shree Yantra</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/rosequartzbuddha.jpg" alt="Rose Quartz Buddha Statue" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Heart Energy</span>
+                            <h4>Rose Quartz Buddha Statue</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/crystalbracelete.jpg" alt="Natural Gemstone Healing Bracelets" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Authentic Beads</span>
+                            <h4>Gemstone Energy Bracelets</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/lapis_lazuli_ganesh.jpg" alt="Carved Lapis Lazuli Ganesh" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Royal Lapis</span>
+                            <h4>Carved Lapis Lazuli Ganesh</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/7_chakara_tree.jpg" alt="7 Chakra Natural Gemstone Tree" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Chakra Balance</span>
+                            <h4>7 Chakra Gemstone Tree</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/green_aventurine_shivling.jpg" alt="Green Aventurine Shivling" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Prosperity Stone</span>
+                            <h4>Green Aventurine Shivling</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/natural_lepidolite_ganesh.jpg" alt="Natural Lepidolite Ganesh" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Tranquility Stone</span>
+                            <h4>Natural Lepidolite Ganesh</h4>
+                        </div>
+                    </div>
+                    <div class="hero-slide">
+                        <img src="imgs/opt/ruby_carving_ganesh.jpg" alt="Fine Carved Ruby Ganesh" width="600" height="520" loading="lazy">
+                        <div class="hero-slide-caption">
+                            <span class="slide-tag">Precious Ruby</span>
+                            <h4>Fine Carved Ruby Ganesh</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slider Navigation Dots -->
+                <div class="hero-slider-dots" id="heroSliderDots" aria-label="Slider navigation">
+                    <button class="dot active" data-slide="0" aria-label="Slide 1"></button>
+                    <button class="dot" data-slide="1" aria-label="Slide 2"></button>
+                    <button class="dot" data-slide="2" aria-label="Slide 3"></button>
+                    <button class="dot" data-slide="3" aria-label="Slide 4"></button>
+                    <button class="dot" data-slide="4" aria-label="Slide 5"></button>
+                    <button class="dot" data-slide="5" aria-label="Slide 6"></button>
+                    <button class="dot" data-slide="6" aria-label="Slide 7"></button>
+                    <button class="dot" data-slide="7" aria-label="Slide 8"></button>
+                    <button class="dot" data-slide="8" aria-label="Slide 9"></button>
+                    <button class="dot" data-slide="9" aria-label="Slide 10"></button>
+                </div>
             </div>
             <div class="hero-badge">
                 <i class="fa-solid fa-award"></i>
                 <div>
-                    <p>Curated by Artisans</p>
-                    <p>Every piece inspected by hand</p>
+                    <p>Jaipur Master Artisans</p>
+                    <p>Temple-grade natural stone, hand-finished</p>
                 </div>
             </div>
         </div>
@@ -1138,30 +1373,30 @@
     <section id="about" class="fade">
         <div class="about-wrap">
             <div class="about-panel">
-                <h3>“Every stone carries a story before we ever touch it — our work is simply to reveal it.”</h3>
-                <p class="sig">— Balaji Murti Art &amp; Gems</p>
+                <h3>“Every stone carries a sacred story within — our lifelong devotion is to reveal its divine form.”</h3>
+                <p class="sig">— Balaji Murti Art &amp; Gems, Jaipur</p>
             </div>
             <div class="about-copy">
-                <span class="eyebrow">Our Craft</span>
-                <h2 style="font-size:34px;margin-bottom:16px;">Rooted in tradition, cut for today</h2>
-                <p>Balaji Murti Art &amp; Gems began as a small family workshop working with natural crystal and semi-precious stone, shaping Ganesh, Shivling, and Shree Yantra murtis for home temples across India.</p>
-                <p>Every piece — from a hand-carved crystal murti to a beaded gemstone bracelet — passes through the same hands that select, cut, and polish it. Nothing is rushed, and nothing leaves the workshop that we wouldn't keep for ourselves.</p>
+                <span class="eyebrow">The Atelier Legacy</span>
+                <h2 style="font-size:34px;margin-bottom:16px;">Generations of Devotion, Chiseled to Perfection</h2>
+                <p>Rooted in Jaipur's centuries-old lapidary heritage, Balaji Murti Art &amp; Gems shapes rare natural crystals, quartz, and semi-precious minerals into revered deities and sacred energy forms for home mandirs and spiritual sanctuaries worldwide.</p>
+                <p>Every piece — from an intricate Sphatik Shivling and Green Jade Ganesh to a hand-strung healing bracelet — is carved from solid earth-born stone. Free from synthetic resins, moulds, or factory mass-production, each creation is an enduring tribute to divine grace.</p>
                 <div class="about-stats">
                     <div class="stat">
                         <h4>100%</h4>
-                        <p>Natural Stone</p>
+                        <p>Natural Minerals</p>
                     </div>
                     <div class="stat">
                         <h4>Hand</h4>
-                        <p>Finished Detail</p>
+                        <p>Carved by Masters</p>
                     </div>
                     <div class="stat">
                         <h4>Pan-India</h4>
-                        <p>Shipping</p>
+                        <p>Insured Delivery</p>
                     </div>
                 </div>
                 <div class="hero-ctas" style="margin-top:34px;margin-bottom:0;">
-                    <a href="about.html" class="btn-ghost-gem">Read Our Story <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="about.html" class="btn-ghost-gem">Discover Our Heritage <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -1170,298 +1405,298 @@
     <!-- FEATURED PRODUCTS -->
     <section id="products" class="fade">
         <div class="section-head">
-            <span class="eyebrow">Featured Collection</span>
-            <h2>Signature pieces, hand-finished</h2>
-            <p>Each murti is carved from natural crystal and gemstone — no two pieces are ever identical.</p>
+            <span class="eyebrow">Curated Masterpieces</span>
+            <h2>Sacred Icons &amp; Heirloom Sculptures</h2>
+            <p>From sanctified Sphatik Shivlings to finely carved Green Jade Ganesh murtis — each creation is irreproducible, sculpted by hand from raw crystalline earth.</p>
         </div>
 
         <div class="product-grid">
             <a href="7_chakra_tree.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/7 chakara tree.jpeg" alt="7 Chakra Tree"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/7_chakara_tree.jpg" loading="lazy" decoding="async" alt="7 Chakra Tree"></div>
                 <div class="info">
                     <h3>7 Chakra Tree</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_buddha.html" class="product-card">
-                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/Green Jade Buddha .jpeg" alt="Green Jade Buddha"></div>
+                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/opt/green_jade_buddha_.jpg" loading="lazy" decoding="async" alt="Green Jade Buddha"></div>
                 <div class="info">
                     <h3>Green Jade Buddha</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="lapis_lazuli_buddha_statue.html" class="product-card">
-                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/Lapis Lazuli Buddha statue.jpeg" alt="Lapis Lazuli Buddha Statue"></div>
+                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/opt/lapis_lazuli_buddha_statue.jpg" loading="lazy" decoding="async" alt="Lapis Lazuli Buddha Statue"></div>
                 <div class="info">
                     <h3>Lapis Lazuli Buddha Statue</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="jaipur_gemstone_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/WhatsApp Image 2026-08-12 at 8.38.27 PM.jpeg" alt="Jaipur Gemstone Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/whatsapp_image_2026-08-12_at_8.38.27_pm.jpg" loading="lazy" decoding="async" alt="Jaipur Gemstone Ganesh"></div>
                 <div class="info">
                     <h3>Jaipur Gemstone Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="hand_carved_dark_green_jadeite_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/and-carved dark green jadeite pendant.jpeg" alt="Hand-carved Dark Green Jadeite Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/and-carved_dark_green_jadeite_pendant.jpg" loading="lazy" decoding="async" alt="Hand-carved Dark Green Jadeite Pendant"></div>
                 <div class="info">
                     <h3>Hand-carved Dark Green Jadeite Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="carnelian_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/carnelian  pendant.jpeg" alt="Carnelian Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/carnelian__pendant.jpg" loading="lazy" decoding="async" alt="Carnelian Pendant"></div>
                 <div class="info">
                     <h3>Carnelian Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="citrine_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/citrine pendent.jpeg" alt="Citrine Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/citrine_pendent.jpg" loading="lazy" decoding="async" alt="Citrine Pendant"></div>
                 <div class="info">
                     <h3>Citrine Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_lingam.html" class="product-card">
-                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/crystal lingam.jpeg" alt="Crystal Lingam"></div>
+                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/opt/crystal_lingam.jpg" loading="lazy" decoding="async" alt="Crystal Lingam"></div>
                 <div class="info">
                     <h3>Crystal Lingam</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_eagle_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal sculpture eagle 2.jpeg" alt="Crystal Sculpture Eagle 2"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_sculpture_eagle_2.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Eagle 2"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Eagle 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_eagle_skull.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal sculpture eagle skull.jpeg" alt="Crystal Sculpture Eagle Skull"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_sculpture_eagle_skull.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Eagle Skull"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Eagle Skull</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_wolf_s_skull_1.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal sculpture wolf's skull 1.jpeg" alt="Crystal Sculpture Wolf's Skull 1"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_sculpture_wolfs_skull_1.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Wolf's Skull 1"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Wolf's Skull 1</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_wolf_s_skull.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal sculpture wolf's skull.jpeg" alt="Crystal Sculpture Wolf's Skull"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_sculpture_wolfs_skull.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Wolf's Skull"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Wolf's Skull</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_wolf.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal sculpture wolf.jpeg" alt="Crystal Sculpture Wolf"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_sculpture_wolf.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Wolf"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Wolf</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_shree_yantra.html" class="product-card">
-                <div class="thumb"><span class="tag">Shreeyantra</span><img src="imgs/crystal shree yantra.jpeg" alt="Crystal Shree Yantra"></div>
+                <div class="thumb"><span class="tag">Shreeyantra</span><img src="imgs/opt/crystal_shree_yantra.jpg" loading="lazy" decoding="async" alt="Crystal Shree Yantra"></div>
                 <div class="info">
                     <h3>Crystal Shree Yantra</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_snake_skull.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal snake skull.jpeg" alt="Crystal Snake Skull"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_snake_skull.jpg" loading="lazy" decoding="async" alt="Crystal Snake Skull"></div>
                 <div class="info">
                     <h3>Crystal Snake Skull</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_tree.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystal tree.jpeg" alt="Crystal Tree"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystal_tree.jpg" loading="lazy" decoding="async" alt="Crystal Tree"></div>
                 <div class="info">
                     <h3>Crystal Tree</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_bangles.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystalbangles.jpeg" alt="Crystal Bangles"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystalbangles.jpg" loading="lazy" decoding="async" alt="Crystal Bangles"></div>
                 <div class="info">
                     <h3>Crystal Bangles</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="crystal_sculpture_eagle.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/crystalsculptureeagle.jpeg" alt="Crystal Sculpture Eagle"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/crystalsculptureeagle.jpg" loading="lazy" decoding="async" alt="Crystal Sculpture Eagle"></div>
                 <div class="info">
                     <h3>Crystal Sculpture Eagle</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_aventurine_ganesh_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green aventurine ganesh  2.jpeg" alt="Green Aventurine Ganesh 2"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_aventurine_ganesh__2.jpg" loading="lazy" decoding="async" alt="Green Aventurine Ganesh 2"></div>
                 <div class="info">
                     <h3>Green Aventurine Ganesh 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_aventurine_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green aventurine ganesh .jpeg" alt="Green Aventurine Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_aventurine_ganesh_.jpg" loading="lazy" decoding="async" alt="Green Aventurine Ganesh"></div>
                 <div class="info">
                     <h3>Green Aventurine Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_aventurine_ganesh_1.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green aventurine ganesh 1.jpeg" alt="Green Aventurine Ganesh 1"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_aventurine_ganesh_1.jpg" loading="lazy" decoding="async" alt="Green Aventurine Ganesh 1"></div>
                 <div class="info">
                     <h3>Green Aventurine Ganesh 1</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_aventurine_shivling.html" class="product-card">
-                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/green aventurine shivling.jpeg" alt="Green Aventurine Shivling"></div>
+                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/opt/green_aventurine_shivling.jpg" loading="lazy" decoding="async" alt="Green Aventurine Shivling"></div>
                 <div class="info">
                     <h3>Green Aventurine Shivling</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_emerald_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/green emerald pendent.jpeg" alt="Green Emerald Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/green_emerald_pendent.jpg" loading="lazy" decoding="async" alt="Green Emerald Pendant"></div>
                 <div class="info">
                     <h3>Green Emerald Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_bangle_and_ring.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/green jada bangle and ring .jpeg" alt="Green Jade Bangle and Ring"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/green_jada_bangle_and_ring_.jpg" loading="lazy" decoding="async" alt="Green Jade Bangle and Ring"></div>
                 <div class="info">
                     <h3>Green Jade Bangle and Ring</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_bangles_and_ring.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/green jade bangles and ring.jpeg" alt="Green Jade Bangles and Ring"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/green_jade_bangles_and_ring.jpg" loading="lazy" decoding="async" alt="Green Jade Bangles and Ring"></div>
                 <div class="info">
                     <h3>Green Jade Bangles and Ring</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_carving_ganesh_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green jade carving ganesh 2.jpeg" alt="Green Jade Carving Ganesh 2"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_jade_carving_ganesh_2.jpg" loading="lazy" decoding="async" alt="Green Jade Carving Ganesh 2"></div>
                 <div class="info">
                     <h3>Green Jade Carving Ganesh 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_carving_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green jade carving ganesh.jpeg" alt="Green Jade Carving Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_jade_carving_ganesh.jpg" loading="lazy" decoding="async" alt="Green Jade Carving Ganesh"></div>
                 <div class="info">
                     <h3>Green Jade Carving Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_ganesh_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green jade ganesh 2.jpeg" alt="Green Jade Ganesh 2"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_jade_ganesh_2.jpg" loading="lazy" decoding="async" alt="Green Jade Ganesh 2"></div>
                 <div class="info">
                     <h3>Green Jade Ganesh 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green jade ganesh.jpeg" alt="Green Jade Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_jade_ganesh.jpg" loading="lazy" decoding="async" alt="Green Jade Ganesh"></div>
                 <div class="info">
                     <h3>Green Jade Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jade_ganesh_3.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/green jade ganesj 3.jpeg" alt="Green Jade Ganesh 3"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/green_jade_ganesj_3.jpg" loading="lazy" decoding="async" alt="Green Jade Ganesh 3"></div>
                 <div class="info">
                     <h3>Green Jade Ganesh 3</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="green_jadehand_carved_tirupati_balaji.html" class="product-card">
-                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/green jadehand-carved Tirupati Balaji.jpeg" alt="Green Jade Hand-carved Tirupati Balaji"></div>
+                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/opt/green_jadehand-carved_tirupati_balaji.jpg" loading="lazy" decoding="async" alt="Green Jade Hand-carved Tirupati Balaji"></div>
                 <div class="info">
                     <h3>Green Jade Hand-carved Tirupati Balaji</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="lapis_lazuli_ganesh_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/lapis lazuli ganesh (2).jpeg" alt="Lapis Lazuli Ganesh 2"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/lapis_lazuli_ganesh__2_.jpg" loading="lazy" decoding="async" alt="Lapis Lazuli Ganesh 2"></div>
                 <div class="info">
                     <h3>Lapis Lazuli Ganesh 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="lapis_lazuli_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/lapis lazuli ganesh.jpeg" alt="Lapis Lazuli Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/lapis_lazuli_ganesh.jpg" loading="lazy" decoding="async" alt="Lapis Lazuli Ganesh"></div>
                 <div class="info">
                     <h3>Lapis Lazuli Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="lapis_lazuli_sai_baba.html" class="product-card">
-                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/lapis lazuli sai baba.jpeg" alt="Lapis Lazuli Sai Baba"></div>
+                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/opt/lapis_lazuli_sai_baba.jpg" loading="lazy" decoding="async" alt="Lapis Lazuli Sai Baba"></div>
                 <div class="info">
                     <h3>Lapis Lazuli Sai Baba</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="labradorite_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/leboright pendent.jpeg" alt="Labradorite Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/leboright_pendent.jpg" loading="lazy" decoding="async" alt="Labradorite Pendant"></div>
                 <div class="info">
                     <h3>Labradorite Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="natural_lepidolite_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/natural lepidolite ganesh.jpeg" alt="Natural Lepidolite Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/natural_lepidolite_ganesh.jpg" loading="lazy" decoding="async" alt="Natural Lepidolite Ganesh"></div>
                 <div class="info">
                     <h3>Natural Lepidolite Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="opalunicorn.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opalunicon.jpeg" alt="Opal Unicorn"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/opalunicon.jpg" loading="lazy" decoding="async" alt="Opal Unicorn"></div>
                 <div class="info">
                     <h3>Opal Unicorn</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="pale_green_jadeite_figurine.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/pale green jadeite figurine.jpeg" alt="Pale Green Jadeite Figurine"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/pale_green_jadeite_figurine.jpg" loading="lazy" decoding="async" alt="Pale Green Jadeite Figurine"></div>
                 <div class="info">
                     <h3>Pale Green Jadeite Figurine</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="red_jasper_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/red jasper ganesh.jpeg" alt="Red Jasper Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/red_jasper_ganesh.jpg" loading="lazy" decoding="async" alt="Red Jasper Ganesh"></div>
                 <div class="info">
                     <h3>Red Jasper Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="red_ruby_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/red ruby pendant.jpeg" alt="Red Ruby Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/red_ruby_pendant.jpg" loading="lazy" decoding="async" alt="Red Ruby Pendant"></div>
                 <div class="info">
                     <h3>Red Ruby Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="rose_quartz_buddha.html" class="product-card">
-                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/rose quartz budda.jpeg" alt="Rose Quartz Buddha"></div>
+                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/opt/rose_quartz_budda.jpg" loading="lazy" decoding="async" alt="Rose Quartz Buddha"></div>
                 <div class="info">
                     <h3>Rose Quartz Buddha</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="rose_quartz_flower.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/rose quartz flower.jpeg" alt="Rose Quartz Flower"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/rose_quartz_flower.jpg" loading="lazy" decoding="async" alt="Rose Quartz Flower"></div>
                 <div class="info">
                     <h3>Rose Quartz Flower</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="rose_quartz_ganesh_2.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/rose quartz ganesh (2).jpeg" alt="Rose Quartz Ganesh 2"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/rose_quartz_ganesh__2_.jpg" loading="lazy" decoding="async" alt="Rose Quartz Ganesh 2"></div>
                 <div class="info">
                     <h3>Rose Quartz Ganesh 2</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="rose_quartz_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/rose quartz ganesh.jpeg" alt="Rose Quartz Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/rose_quartz_ganesh.jpg" loading="lazy" decoding="async" alt="Rose Quartz Ganesh"></div>
                 <div class="info">
                     <h3>Rose Quartz Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="ruby_carving_ganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/ruby carving ganesh.jpeg" alt="Ruby Carving Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/ruby_carving_ganesh.jpg" loading="lazy" decoding="async" alt="Ruby Carving Ganesh"></div>
                 <div class="info">
                     <h3>Ruby Carving Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="sunstone_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/sunstone pendant.jpeg" alt="Sunstone Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/sunstone_pendant.jpg" loading="lazy" decoding="async" alt="Sunstone Pendant"></div>
                 <div class="info">
                     <h3>Sunstone Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="tiger_eye_bangle.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/tiger eye bangle.jpeg" alt="Tiger Eye Bangle"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/tiger_eye_bangle.jpg" loading="lazy" decoding="async" alt="Tiger Eye Bangle"></div>
                 <div class="info">
                     <h3>Tiger Eye Bangle</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
             <a href="white_crystal_pendant.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/white crystal pendent.jpeg" alt="White Crystal Pendant"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/white_crystal_pendent.jpg" loading="lazy" decoding="async" alt="White Crystal Pendant"></div>
                 <div class="info">
                     <h3>White Crystal Pendant</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
 
             <a href="crystalshivling.html" class="product-card">
-                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/DSC_6594.JPG" alt="Crystal Shivling"></div>
+                <div class="thumb"><span class="tag">Shivling</span><img src="imgs/opt/dsc_6594.jpg" loading="lazy" decoding="async" alt="Crystal Shivling"></div>
                 <div class="info">
                     <h3>Crystal Shivling</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="crystalsy.html" class="product-card">
-                <div class="thumb"><span class="tag">Shree Yantra</span><img src="imgs/sy1.JPG" alt="Crystal Shree Yantra"></div>
+                <div class="thumb"><span class="tag">Shree Yantra</span><img src="imgs/opt/sy1.jpg" loading="lazy" decoding="async" alt="Crystal Shree Yantra"></div>
                 <div class="info">
                     <h3>Crystal Shree Yantra</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="green_aventurine0.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/DSC_6548.JPG" alt="Green Aventurine Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/dsc_6548.jpg" loading="lazy" decoding="async" alt="Green Aventurine Ganesh"></div>
                 <div class="info">
                     <h3>Green Aventurine Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="laxmiganesh.html" class="product-card">
-                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/DSC_6538.JPG" alt="Laxmi Ganesh"></div>
+                <div class="thumb"><span class="tag">Ganesh</span><img src="imgs/opt/dsc_6538.jpg" loading="lazy" decoding="async" alt="Laxmi Ganesh"></div>
                 <div class="info">
                     <h3>Crystal Laxmi Ganesh</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="crystallingam.html" class="product-card">
-                <div class="thumb"><span class="tag">Lingam</span><img src="imgs/DSC_6622.JPG" alt="Crystal Lingam"></div>
+                <div class="thumb"><span class="tag">Lingam</span><img src="imgs/opt/dsc_6622.jpg" loading="lazy" decoding="async" alt="Crystal Lingam"></div>
                 <div class="info">
                     <h3>Crystal Lingam</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="buddahead.html" class="product-card">
-                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/IMG20220331082505.jpg" alt="Rosequartz Buddha Head"></div>
+                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/opt/img20220331082505.jpg" loading="lazy" decoding="async" alt="Rosequartz Buddha Head"></div>
                 <div class="info">
                     <h3>Rosequartz Buddha Head</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="pyritepyramid.html" class="product-card">
-                <div class="thumb"><span class="tag">Classic</span><img src="imgs/pyridepramid.jpg" alt="Pyrite Pyramid"></div>
+                <div class="thumb"><span class="tag">Classic</span><img src="imgs/opt/pyridepramid.jpg" loading="lazy" decoding="async" alt="Pyrite Pyramid"></div>
                 <div class="info">
                     <h3>Pyrite Pyramid</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
 
             <a href="rosequartzbuddha.html" class="product-card">
-                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/rosequartzbuddha.jpg" alt="Rose Quartz Buddha"></div>
+                <div class="thumb"><span class="tag">Buddha</span><img src="imgs/opt/rosequartzbuddha.jpg" loading="lazy" decoding="async" alt="Rose Quartz Buddha"></div>
                 <div class="info">
                     <h3>Rose Quartz Buddha</h3><span class="view-link">View Details <i class="fa-solid fa-arrow-right"></i></span></div>
             </a>
@@ -1476,39 +1711,39 @@
     <!-- BRACELET TEASER -->
     <section id="bracelets" class="fade">
         <div class="section-head">
-            <span class="eyebrow">Fashion &amp; Gift</span>
-            <h2>Gemstone bracelets for everyday wear</h2>
-            <p>Classic, men's, women's, and unisex designs — tap any piece to head to the full bracelet section.</p>
+            <span class="eyebrow">Spiritual Adornments &amp; Energy</span>
+            <h2>Sacred Gemstone Bracelets &amp; Energy Pendants</h2>
+            <p>Hand-selected natural stones cut and polished for aura balance, spiritual mindfulness, and timeless daily elegance.</p>
         </div>
 
         <div class="bracelet-strip">
-            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/1.png" alt="bracelet"><span class="product-name">Classic Bracelet</span></a>
-            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/36.png" alt="men bracelet"><span class="product-name">Men's Bracelet</span></a>
-            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/42.png" alt="women bracelet"><span class="product-name">Women's Bracelet</span></a>
-            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/26.png" alt="unisex bracelet"><span class="product-name">Unisex Bracelet</span></a>
-            <a href="crystalbracelet.html" class="bracelet-card"><img src="imgs/crystalbracelete.jpg" alt="crystal bracelet"><span class="product-name">Crystal Bracelet</span></a>
-            <a href="rosequartzpendant.html" class="bracelet-card"><img src="imgs/rosequartzpendent.jpg" alt="rose quartz pendant"><span class="product-name">Rose Quartz Pendant</span></a>
+            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/opt/1.png" loading="lazy" decoding="async" alt="bracelet"><span class="product-name">Classic Bracelet</span></a>
+            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/opt/36.png" loading="lazy" decoding="async" alt="men bracelet"><span class="product-name">Men's Bracelet</span></a>
+            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/opt/42.png" loading="lazy" decoding="async" alt="women bracelet"><span class="product-name">Women's Bracelet</span></a>
+            <a href="products.html#bracelets" class="bracelet-card"><img src="imgs/opt/26.png" loading="lazy" decoding="async" alt="unisex bracelet"><span class="product-name">Unisex Bracelet</span></a>
+            <a href="crystalbracelet.html" class="bracelet-card"><img src="imgs/opt/crystalbracelete.jpg" loading="lazy" decoding="async" alt="crystal bracelet"><span class="product-name">Crystal Bracelet</span></a>
+            <a href="rosequartzpendant.html" class="bracelet-card"><img src="imgs/opt/rosequartzpendent.jpg" loading="lazy" decoding="async" alt="rose quartz pendant"><span class="product-name">Rose Quartz Pendant</span></a>
         </div>
 
         <div class="see-all-wrap">
-            <a href="products.html#bracelets" class="btn-ghost-gem">View Full Bracelet Catalogue <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="products.html#bracelets" class="btn-ghost-gem">Explore All Gemstone Adornments <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </section>
 
     <!-- CONTACT TEASER -->
     <section id="contact" class="fade">
         <div class="section-head center">
-            <span class="eyebrow">Get In Touch</span>
-            <h2>Have a piece in mind?</h2>
-            <p>Tell us what you're looking for, or message us directly on WhatsApp for the fastest response.</p>
+            <span class="eyebrow">Bespoke &amp; Custom Orders</span>
+            <h2>Commission a Sacred Masterpiece for Your Sanctuary</h2>
+            <p>Whether you require specific dimensions for your home mandir or wish to explore a rare gemstone, our artisans in Jaipur are ready to assist you directly.</p>
         </div>
 
         <div class="cta-banner">
-            <h2>We'd love to help you find the perfect piece</h2>
-            <p>Reach out for pricing, custom orders, or help choosing a murti or bracelet.</p>
+            <h2>Let Us Craft Your Sacred Vision</h2>
+            <p>Direct artisan consultation, live video inspection before dispatch, and secure pan-India insured shipping.</p>
             <div class="hero-ctas" style="justify-content:center;margin-bottom:0;">
-                <a href="contact.html" class="btn-primary-gem">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
-                <a href="https://wa.me/918209307105" target="_blank" class="btn-ghost-gem"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                <a href="contact.html" class="btn-primary-gem">Enquire With Our Atelier <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="https://wa.me/917877959827" target="_blank" class="btn-ghost-gem"><i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp</a>
             </div>
         </div>
     </section>
@@ -1535,7 +1770,7 @@
             } else {
                 toTop.classList.remove('show');
             }
-        });
+        }, { passive: true });
         toTop.addEventListener('click', () => window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -1544,12 +1779,23 @@
         // ---- Fade-in reveal ----
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('show');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target);
+                }
             });
         }, {
-            threshold: 0.1
+            threshold: 0.01,
+            rootMargin: '100px 0px'
         });
         document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+        // Safety trigger for any elements in view on load
+        setTimeout(() => {
+            document.querySelectorAll('.fade:not(.show)').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight + 200) el.classList.add('show');
+            });
+        }, 300);
 
         // ---- Search overlay -> searches on the products page ----
         const searchOverlay = document.getElementById('searchOverlay');
@@ -1576,6 +1822,82 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') searchOverlay.classList.remove('open');
         });
+
+        // ---- Hero Product Auto-Slider with Touch Support ----
+        const heroSlider = document.getElementById('heroSlider');
+        if (heroSlider) {
+            const slides = heroSlider.querySelectorAll('.hero-slide');
+            const dotsContainer = document.getElementById('heroSliderDots');
+            const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+            let currentSlide = 0;
+            let slideInterval = null;
+            const slideDuration = 3600;
+
+            function goToSlide(index) {
+                slides[currentSlide].classList.remove('active');
+                if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+                currentSlide = (index + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+                if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+            }
+
+            function nextSlide() {
+                goToSlide(currentSlide + 1);
+            }
+
+            function prevSlide() {
+                goToSlide(currentSlide - 1);
+            }
+
+            function startAutoPlay() {
+                if (!slideInterval) {
+                    slideInterval = setInterval(nextSlide, slideDuration);
+                }
+            }
+
+            function stopAutoPlay() {
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                    slideInterval = null;
+                }
+            }
+
+            dots.forEach((dot, idx) => {
+                dot.addEventListener('click', () => {
+                    stopAutoPlay();
+                    goToSlide(idx);
+                    startAutoPlay();
+                });
+            });
+
+            const heroFrameEl = heroSlider.closest('.hero-frame');
+            if (heroFrameEl) {
+                heroFrameEl.addEventListener('mouseenter', stopAutoPlay);
+                heroFrameEl.addEventListener('mouseleave', startAutoPlay);
+            }
+
+            // Touch Swipe Support for mobile phones
+            let touchStartX = 0;
+            let touchStartY = 0;
+            heroSlider.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                stopAutoPlay();
+            }, { passive: true });
+
+            heroSlider.addEventListener('touchend', (e) => {
+                const diffX = touchStartX - e.changedTouches[0].clientX;
+                const diffY = touchStartY - e.changedTouches[0].clientY;
+                if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX > 0) nextSlide();
+                    else prevSlide();
+                }
+                startAutoPlay();
+            }, { passive: true });
+
+            startAutoPlay();
+        }
+
     </script>
 
 </body>
