@@ -1,0 +1,9 @@
+# Robots.txt for Balaji Murti Art & Gems
+# Allow all search engine crawlers to access public pages
+
+User-agent: *
+Allow: /
+Disallow: /product-detail-template.html
+
+# Sitemap location for Google Search Console & other search engines
+Sitemap: https://balaji-murti-art.vercel.app/sitemap.xml
