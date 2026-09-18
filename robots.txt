@@ -6,4 +6,4 @@ Allow: /
 Disallow: /product-detail-template.html
 
 # Sitemap location for Google Search Console & other search engines
-Sitemap: https://balaji-murti-art.vercel.app/sitemap.xml
+Sitemap: https://balajimurtiart.vercel.app/sitemap.xml
